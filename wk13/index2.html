@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function update_todo_table(todos){
+            $("#todos").empty();
+            $("#todos").append("<th>id</th>");
+            $("#todos").append("<th>content</th>");
+            $("#todos").append("<th>due</th>");
+            todos.forEach(item=>{
+                var date = new Date(item.due);
+                var time = (date.getMonth()+1) = "/" +
+                date.getDate() + " " +
+                date.getHours() + ":" +
+                date.getMinutes()
+            $("#todos").append("<tr>");
+            $("#todos").append("<td>"+item.id+"</td>");
+            $("#todos").append("<td>"+item.content+"</td>");
+            $("#todos").append("<td>"+time+"</td>");
+            $("#todos").append("</tr>");
+            });
+        }
+        function get_todos(){
+            $.getJSON("/todo".update_todo_table);
+        }
+        $(document).ready(function () {
+            get_todos();
+
+            $("#todo_submit").click(function (event){
+                var content = $("#todo_content").val();
+                var due = $("#todo_due").val();
+                var data = $("#todo_data").val();
+                console.log(data);
+                $.ajax({
+                    url: "/todo",
+                    type: "post",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: update_todo_table
+                })
+            })
+        })
+    </script>
+    <style>
+        table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th{
+            border: 1px solid #DDDDDD;
+            text-align:left;
+            padding:8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello</h1>
+    <a href="/logout"><button id="logout">Logout</button></a>
+    <h1>Todos</h1>
+    <table id="todos">
+    </table>
+    <div>
+        <h1>Add Todo</h1>
+        content: <input type="text" id="todo_content"><br>
+        due: <input type="datatime-local" id="todo_due"><br>
+        <button id="todo_submit">add</button><br>
+    </div>
+</body>
+</html>

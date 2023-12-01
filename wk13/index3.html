@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function update_todo_table(todos){
+            $("#todos").empty();
+            $("#todos").append("<th>id</th>");
+            $("#todos").append("<th>content</th>");
+            $("#todos").append("<th>due</th>");
+            todos.forEach(item=>{
+                var date = new Date(item.due);
+                var time = (date.getMonth()+1) = "/" +
+                date.getDate() + " " +
+                date.getHours() + ":" +
+                date.getMinutes()
+            $("#todos").append("<tr>");
+            $("#todos").append("<td>"+item.id+"</td>");
+            $("#todos").append("<td>"+item.content+"</td>");
+            $("#todos").append("<td>"+time+"</td>");
+            $("#todos").append('<td onclick="del_todo(' + item.id +')">click</td>');
+            $("#todos").append("</tr>");
+            });
+        }
+        function del_todo(id){
+            var data = {"id": id};
+            console.log(data);
+            $.ajax({
+            url: "/todo",
+            type: "delete",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: update_todo_table
+        })
+    }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

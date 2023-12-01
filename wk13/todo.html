@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .column {
+            width: 30%;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        h3 {
+            text-align: left;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        .task {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="column">
+    <h3>ADD</h3>
+    <ul id="add-list">
+        <li class="task">
+            <p>Due</p>
+            <input type="text" class="due-input">
+            <p>Title</p>
+            <input type="text" class="title-input">
+            <p>Content</p>
+            <input type="text" class="content-input">
+            <button class="add-button"><h2>ADD</h2></button>
+        </li>
+    </ul>
+</div>
+
+<div class="column">
+    <h3>TODO</h3>
+    <ul id="todo-list">
+        <!-- You can add items to the TODO column here -->
+    </ul>
+</div>
+
+<div class="column">
+    <h3>DONE</h3>
+    <ul id="done-list">
+        <!-- You can add items to the DONE column here -->
+    </ul>
+</div>
+
+<script>
+    // Add button click event
+    $(document).on("click", ".add-button", function () {
+        let task = $(this).closest('.task');
+        let due = task.find('.due-input').val();
+        let title = task.find('.title-input').val();
+        let content = task.find('.content-input').val();
+
+        // Create a new task in the "TODO" list
+        let newTask = `<li class="task">
+            <p>Due: ${due}</p>
+            <h2>Title: ${title}</h2>
+            <p>Content: ${content}</p>
+            <button class="done-button"><h2>Done</h2></button>
+        </li>`;
+
+        $('#todo-list').append(newTask);
+
+        // Clear input fields
+        task.find('input').val('');
+    });
+
+    // Done button click event
+    $(document).on("click", ".done-button", function () {
+        let task = $(this).closest('.task');
+        // Remove from the TODO list
+        task.remove();
+        // Move to the DONE list
+        $('#done-list').append(task);
+        task.find('.done-button').remove(); // Remove the "Done" button
+        task.append('<button class="delete-button"><h2>Delete</h2></button>');
+    });
+
+    // Delete button click event
+    $(document).on("click", ".delete-button", function () {
+        let task = $(this).closest('.task');
+        // Remove from the DONE list
+        task.remove();
+    });
+</script>
+</body>
+</html>

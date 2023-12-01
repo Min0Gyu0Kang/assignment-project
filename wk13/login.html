@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("btn.submit").click(function(event){
+                var username= $("#username").val()
+                var password = $("#password").val()
+
+                var data = {"username": username, "password": password};
+                $.ajax({
+                    url:"/token",
+                    type:"post",
+                    data: data,
+                    success: function(data,txtStatus, xhr){
+                        window.location="/";
+                    },
+                    error:function(e){
+                        $("#result").html("login failed");
+                    }
+                });
+           });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <h1>You need login</h1>
+        name: <input type="text"name="username"id = "username" /><br />
+        password:  <input type="text"name="password"id = "password" /><br />
+        <input type="button"name="btn_submit"value = "Login"></input>
+    </div>
+       
+       
+</body>
+</html>
