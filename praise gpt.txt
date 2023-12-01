@@ -1,0 +1,17 @@
+FIND A WAY THEY DON'T WORK
+S - instruction
+int32_t imm_s = ((instruction >> 25) << 11) | ((instruction >> 7) & 0x1F);
+	    printf("inst %d: %08x %s x%d, %d(x%d)\n", inst_num, instruction, assembly_str, rs2, imm_s, rs1);
+    	    break;
+
+B - instruction
+
+
+lui, auipc
+
+  
+J - instruction
+
+srai
+
+            

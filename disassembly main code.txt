@@ -1,0 +1,212 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+#define CHUNK_SIZE 4096  // Adjust the chunk size as needed
+#define NUM_REGISTERS 32 //31 instruction lines
+#define MEM_SIZE 1024 //give memory array for lw and sw
+
+uint32_t registers[NUM_REGISTERS];
+uint32_t pc;  // Program counter
+uint8_t memory[MEM_SIZE];  
+
+void assemble(uint32_t instruction) {
+    uint32_t opcode = instruction & 0x7F;
+    uint32_t rd = (instruction >> 7) & 0x1F;
+    uint32_t rs1 = (instruction >> 15) & 0x1F;
+    uint32_t rs2 = (instruction >> 20) & 0x1F;
+    uint32_t funct3 = (instruction >> 12) & 0x7;
+    uint32_t funct7 = (instruction >> 25) & 0x7F;
+    int32_t imm = (int32_t)instruction >> 20;
+
+    switch (opcode) {
+        case 0x13:
+            // I-Type instructions
+            switch (funct3) {
+                case 0x0:
+                    // addi
+                    registers[rd] = registers[rs1] + imm;
+                    break;
+                case 0x1:
+                    // slli
+                    registers[rd] = registers[rs1] << (imm & 0x1F);
+                    break;
+                case 0x4:
+                    // xori
+                    registers[rd] = registers[rs1] ^ imm;
+                    break;
+                case 0x6:
+                    // ori
+                    registers[rd] = registers[rs1] | imm;
+                    break;
+                case 0x7:
+                    // andi
+                    registers[rd] = registers[rs1] & imm;
+                    break;
+            }
+            break;
+        case 0x33:
+            // R-Type instructions
+            switch (funct3) {
+                case 0x0:
+                    if (funct7 == 0x20) {
+                        // sub
+                        registers[rd] = registers[rs1] - registers[rs2];
+                    } else {
+                        // add
+                        registers[rd] = registers[rs1] + registers[rs2];
+                    }
+                    break;
+                case 0x1:
+                    if (funct7 == 0x00) {
+                        // sll
+                        registers[rd] = registers[rs1] << (registers[rs2] & 0x1F);
+                    }
+                    break;
+                case 0x4:
+                    if (funct7 == 0x00) {
+                        // xor
+                        registers[rd] = registers[rs1] ^ registers[rs2];
+                    }
+                    break;
+                case 0x6:
+                    if (funct7 == 0x00) {
+                        // or
+                        registers[rd] = registers[rs1] | registers[rs2];
+                    }
+                    break;
+                case 0x7:
+                    if (funct7 == 0x00) {
+                        // and
+                        registers[rd] = registers[rs1] & registers[rs2];
+                    }
+                    break;
+            }
+            break;
+        case 0x23:
+            // S-Type instructions (Store)
+            switch (funct3) {
+                case 0x2:
+                    // sw
+                    registers[rs1] = registers[rs2] + imm;
+                    break;
+            }
+            break;
+    case 0x03:
+            // Load and Store instructions
+            switch (funct3) {
+                case 0x2:
+                    // lw
+                    registers[rd] = memory[registers[rs1] + imm];
+                    break;
+            }
+            break;
+        case 0x17:
+            // AUIPC instruction
+            registers[rd] = pc + (imm << 12);
+            break;
+        case 0x37:
+            // LUI instruction
+            registers[rd] = imm << 12;
+            break;
+        case 0x6F:
+            // JAL instruction
+            registers[rd] = pc + 4;
+            pc += imm;
+            break;
+        case 0x67:
+            // JALR instruction
+            registers[rd] = pc + 4;
+            pc = (registers[rs1] + imm) & 0xFFFFFFFE;
+            break;
+        case 0x63:
+            // Branch instructions
+            switch (funct3) {
+                case 0x0:
+                    // beq
+                    if (registers[rs1] == registers[rs2]) {
+                        pc += imm;
+                    }
+                    break;
+                case 0x1:
+                    // bne
+                    if (registers[rs1] != registers[rs2]) {
+                        pc += imm;
+                    }
+                    break;
+                case 0x4:
+                    // blt
+                    if ((int32_t)registers[rs1] < (int32_t)registers[rs2]) {
+                        pc += imm;
+                    }
+                    break;
+                case 0x5:
+                    // bge
+                    if ((int32_t)registers[rs1] >= (int32_t)registers[rs2]) {
+                        pc += imm;
+                    }
+                    break;
+            }
+            break;
+    }
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 2 || argc > 4) {
+        printf("%s instruction_file_name [data_file_name] #_of_instrs_\
+to_execute\n", argv[0]);
+        return 1;
+    }
+
+    // Open the binary file for reading
+    FILE *binFile = fopen(argv[1], "rb");
+    if (binFile == NULL) {
+        perror("Error opening binary file");
+        return 1;
+    }
+
+    // Read the binary data and disassemble it
+    unsigned char buffer[CHUNK_SIZE];
+    size_t bytesRead;
+    int inst_num = 0;
+    
+    // Extract the number of instructions to execute from the command line
+    int numInstructions = argc == 4 ? atoi(argv[3]) : -1 || argc == 3 ? atoi(argv[2]) : -1;;
+
+    // Reset all registers to zero before executing instructions
+    for (int i = 0; i < NUM_REGISTERS; ++i) {
+        registers[i] = 0;
+    }
+    pc=0;
+    rewind(binFile);
+    inst_num = 0;
+    int executedInstructions = 0; // Count of executed instructions
+
+    while ((numInstructions == -1 || inst_num < numInstructions) &&
+           (bytesRead = fread(buffer, 1, CHUNK_SIZE, binFile)) > 0) {
+        for (size_t i = 0; i < bytesRead && (numInstructions == -1 || inst_num < numInstructions); i += 4) {
+            uint32_t instruction = 0;
+            for (int j = 0; j < 4; j++) {
+                instruction |= ((uint32_t)buffer[i + j]) << (j * 8);
+            }
+            // Disassemble for debugging or logging if needed
+            // disassemble(instruction, inst_num);
+            // Simulate the execution of the instruction
+            assemble(instruction);
+            inst_num++;
+            executedInstructions++;
+
+            if (numInstructions != -1 && executedInstructions >= numInstructions) {
+                break; // Stop if the desired number of instructions has been executed
+            }
+        }
+    }
+
+    //printf("\nFinal state of registers:\n");
+    for (int i = 0; i < NUM_REGISTERS; ++i) {
+        printf("x%d: 0x%08x\n", i, registers[i]);
+    }
+    fclose(binFile);
+
+    return 0;
+}

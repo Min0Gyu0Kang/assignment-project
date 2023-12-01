@@ -1,0 +1,188 @@
+void disassemble(uint32_t instruction, int inst_num) {
+    // Extract fields from the RISC-V instruction
+    uint32_t opcode = instruction & 0x7F;
+    uint32_t rd = (instruction >> 7) & 0x1F;
+    uint32_t rs1 = (instruction >> 15) & 0x1F;
+    uint32_t rs2 = (instruction >> 20) & 0x1F;
+    uint32_t funct3 = (instruction >> 12) & 0x7;
+    uint32_t funct7 = (instruction >> 25) & 0x7F;
+
+    // Define the assembly instruction string
+    char *assembly_str = "";
+
+    switch (opcode) {
+        case 0x03:
+            // Load and Store instructions
+            switch (funct3) {
+                case 0x0:
+                    assembly_str = "lb";
+                    break;
+                case 0x1:
+                    assembly_str = "lh";
+                    break;
+                case 0x2:
+                    assembly_str = "lw";
+                    break;
+                case 0x4:
+                    assembly_str = "lbu";
+                    break;
+                case 0x5:
+                    assembly_str = "lhu";
+                    break;
+            }
+            printf("inst %d: %08x %s x%d, %d(x%d)\n", inst_num, instruction, assembly_str, rd, (int32_t)instruction >> 20, rs1);
+            break;
+        case 0x13:
+            // I-Type instructions
+            switch (funct3) {
+                case 0x0:
+                    assembly_str = "addi";
+                    break;
+                case 0x1:
+                    assembly_str = "slli";
+                    break;
+                case 0x2:
+                    assembly_str = "slti";
+                    break;
+                case 0x3:
+                    assembly_str = "sltiu";
+                    break;
+                case 0x4:
+                    assembly_str = "xori";
+                    break;
+                case 0x5:
+                    if (funct7 == 0x00) {
+                        assembly_str = "srli";
+                    } else if (funct7 == 0x20) {
+                        assembly_str = "srai";
+                    }
+                    break;
+                case 0x6:
+                    assembly_str = "ori";
+                    break;
+                case 0x7:
+                    assembly_str = "andi";
+                    break;
+            }
+            printf("inst %d: %08x %s x%d, x%d, %d\n", inst_num, instruction, assembly_str, rd, rs1, (int32_t)instruction >> 20);
+            break;
+        case 0x33:
+            // R-Type instructions
+            switch (funct3) {
+                case 0x0:
+                    if (funct7 == 0x20) {
+                        assembly_str = "sub";
+                    } else {
+                        assembly_str = "add";
+                    }
+                    break;
+                case 0x1:
+                    if (funct7 == 0x00) {
+                        assembly_str = "sll";
+                    }
+                    break;
+                case 0x2:
+                    if (funct7 == 0x00) {
+                        assembly_str = "slt";
+                    }
+                    break;
+                case 0x3:
+                    if (funct7 == 0x00) {
+                        assembly_str = "sltu";
+                    }
+                    break;
+                case 0x4:
+                    if (funct7 == 0x00) {
+                        assembly_str = "xor";
+                    }
+                    break;
+                case 0x5:
+                    if (funct7 == 0x00) {
+                        assembly_str = "srl";
+                    } else if (funct7 == 0x20) {
+                        assembly_str = "sra";
+                    }
+                    break;
+                case 0x6:
+                    if (funct7 == 0x00) {
+                        assembly_str = "or";
+                    }
+                    break;
+                case 0x7:
+                    if (funct7 == 0x00) {
+                        assembly_str = "and";
+                    }
+                    break;
+            }
+            if (assembly_str[0] != '\0') {
+                printf("inst %d: %08x %s x%d, x%d, x%d\n", inst_num, instruction, assembly_str, rd, rs1, rs2);
+            } else {
+                printf("inst %d: %08x unknown instruction\n", inst_num, instruction);
+            }
+            break;
+        case 0x63:
+            // Branch instructions
+            switch (funct3) {
+                case 0x0:
+                    assembly_str = "beq";
+                    break;
+                case 0x1:
+                    assembly_str = "bne";
+                    break;
+                case 0x4:
+                    assembly_str = "blt";
+                    break;
+                case 0x5:
+                    assembly_str = "bge";
+                    break;
+		case 0x6:
+                    assembly_str = "bltu";
+                    break;
+                case 0x7:
+                    assembly_str = "bgeu";
+                    break;
+            }
+            printf("inst %d: %08x %s x%d, x%d, %d\n", inst_num, instruction, assembly_str, rs1, rs2, (int32_t)instruction >> 20);
+            break;
+        case 0x17:
+            // AUIPC instruction
+            assembly_str = "auipc";
+            printf("inst %d: %08x %s x%d, %d\n", inst_num, instruction, assembly_str, rd, (int32_t)instruction >> 12);
+            break;
+        case 0x37:
+            // LUI instruction
+            assembly_str = "lui";
+            printf("inst %d: %08x %s x%d, %d\n", inst_num, instruction, assembly_str, rd, (int32_t)instruction >> 12);
+            break;
+        case 0x6F:
+            // JAL instruction
+            assembly_str = "jal";
+            printf("inst %d: %08x %s x%d, %d\n", inst_num, instruction, assembly_str, rd, (int32_t)instruction >> 20);
+            break;
+        case 0x67:
+            // JALR instruction
+            assembly_str = "jalr";
+            printf("inst %d: %08x %s x%d, x%d, %d\n", inst_num, instruction, assembly_str, rd, rs1, (int32_t)instruction >> 20);
+            break;
+        default:
+            assembly_str = "unknown instruction";
+            printf("inst %d: %08x %s\n", inst_num, instruction, assembly_str);
+            break;
+	case 0x23:
+            // S-Type instructions (Store)
+            switch (funct3) {
+                case 0x0:
+                    assembly_str = "sb";
+                    break;
+                case 0x1:
+                    assembly_str = "sh";
+                    break;
+                case 0x2:
+                    assembly_str = "sw";
+                    break;
+            }
+            int32_t imm_s = ((instruction >> 25) << 11) | ((instruction >> 7) & 0x1F);
+	    printf("inst %d: %08x %s x%d, %d(x%d)\n", inst_num, instruction, assembly_str, rs2, imm_s, rs1);
+    	    break;
+    }
+}

@@ -1,0 +1,35 @@
+./riscv-sim /home/swe3005/2023f/proj1/proj1_1.bin > my_1.txt
+/home/swe3005/2023f/proj1/proj1_1.bin > ref_1.txt
+
+passed txt(1~7): ref_1 ref_2 ref_7
+
+fuck there is something wrong with the numbers read (instructions ok)
+2020315118@swji:/home/2020315118/proj1$ diff me_2.txt ref_2.txt
+7,8c7,8
+< inst 6: 01f1a023 sw x31, 31(x3)
+< inst 7: 00122523 sw x1, 321(x4)
+---
+> inst 6: 01f1a023 sw x31, 0(x3)
+> inst 7: 00122523 sw x1, 10(x4)
+
+==values to change==
+
+beq, bne, blt, bge, bltu, bgeu:(int32_t)instruction >> 20
+lui, auipc: (int32_t)instruction >> 12
+jal, jalr:(int32_t)instruction >> 20
+srai: (int32_t)instruction >> 20
+
+
+proj2:
+add number of times to calculate registers according to final argc
+sample1: ok
+sample2: ok
+sample 3: no 
+sample 4: loop instruction// no
+sample 5: add data bin // seg fault
+sample 6: L instructions //
+sample 7: c file //
+sample 8: c file with swap //
+sample 9: print ASCII //
+sample 10: get user input //
+sample 11: add/sub calculator //
