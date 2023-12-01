@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#drop_box {
+width: 460px;
+height: 200px;
+padding: 10px;
+border: 1px dotted red;
+}
+</style>
+<script>
+function AllowDrop(e) {
+e.preventDefault();
+}
+function Drag(e) {
+e.dataTransfer.setData("Text", e.target.id);
+}
+function Drop(e) {
+e.preventDefault();
+var src = e.dataTransfer.getData("Text");
+e.target.appendChild(document.getElementById(src));
+}
+</script>
+</head>
+<body>
+    <p>This is the shot.</p>
+    <div id="drop_box"
+    ondrop="Drop(event)"
+    ondragover="AllowDrop(event)">
+    </div>
+    <br>
+    <div>
+    <img id="img1" src="807279b9ad3f406b806d5349a6fec4df.jpeg" draggable="true"
+    ondragstart="Drag(event)" width="150" height="200">
+    <img id="img2" src="hi fred.jpg" draggable="true"
+    ondragstart="Drag(event)" width="150" height="200">
+    <img id="img3" src="interlude_fubuki.png" draggable="true"
+    ondragstart="Drag(event)" width="150" height="200">
+    </div>
+    <div>
+    <img id="img4" src="muse.png" draggable="true"
+    ondragstart="Drag(event)" width="150" height="200">
+    <!--  
+    <img id="img5" src="interstellar.jpg" draggable="true"
+    ondragstart="Drag(event)" width="150" height="200">
+    <img id="img6" src="harrypotter.jpg" draggable="true"
+    ondragstart="Drag(event)" width="150" height="200">
+  -->
+    </div>
+    </body>
+    </html>
+    

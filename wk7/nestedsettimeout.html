@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nested setTimeout Example</title>
+</head>
+<body>
+    <p id="output"></p>
+
+    <script>
+        const outputElement = document.getElementById('output');
+        
+        // Function to display a message after a delay
+        function showMessage(message, delay) {
+            setTimeout(function() {
+                outputElement.textContent += message + ' ';
+            }, delay);
+        }
+
+        // Start the sequence of messages
+        showMessage('Hello', 1000);
+        showMessage('How', 2000);
+        showMessage('Are', 3000);
+        showMessage('You?', 4000);
+    </script>
+</body>
+</html>

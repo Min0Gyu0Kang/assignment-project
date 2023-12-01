@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript InnerHTML Example</title>
+</head>
+<body>
+    <h1 id="myHeading">Original Heading</h1>
+    <button onclick="changeText()">Change Heading</button>
+
+    <script>
+        function changeText() {
+            // Get the element by its ID
+            const heading = document.getElementById('myHeading');
+
+            // Modify the inner HTML content
+            heading.innerHTML = 'New Heading Text';
+        }
+    </script>
+</body>
+</html>

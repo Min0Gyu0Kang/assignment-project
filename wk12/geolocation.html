@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <p>Click the button to get your coordinates.</p>
+    <button onclick="getLocation()">Try It</button>
+    <p id ="demo"></p>
+    <button onclick="startGeolocation()">Start geolocation</button>
+    <button onclick="stopGeolocation()">Stop geolocation</button>
+    <div id="target"></div>
+    <p id="demo">Click the button to get your position.</p>
+    <button onclick="getLocation()">Try It</button>
+    <div id="mapholder"></div>
+
+    </body>
+    <script>
+        var x = document.getElementById("demo");
+        function getLocation() {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+        }
+        else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        }
+        function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+        }
+        var id;
+        var myDiv = document.getElementById("target");
+        function startGeolocation() {
+        if (navigator.geolocation) {
+        id = navigator.geolocation.watchPosition(showGeolocation);
+        }
+        }
+        function showGeolocation(location) {
+        myDiv.innerHTML = "(Latitude: " + location.coords.latitude +
+        ", Longitude: " + location.coords.longitude + ")";
+        }
+        function stopGeolocation() {
+        if (navigator.geolocation) {
+        navigator.geolocation.clearWatch(id);
+        myDiv.innerHTML = "";
+        }
+        }
+        var x = document.getElementById("demo");
+        function getLocation() {
+        if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+        } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        }
+        function showPosition(position) {
+        var latlon = position.coords.latitude + "," + position.coords.longitude;
+        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+        +latlon+"&zoom=14&size=400x300&key=API_KEY";
+        document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+        }
+        </script>
+    </html>

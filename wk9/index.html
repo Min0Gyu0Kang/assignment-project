@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#btn_submit").click(function(event) {
+            var artist = $("#artist").val();
+            var music = $("#music").val();
+            var data = {"artist": artist, "music": music};
+            $.ajax({
+                url: "/postmusic",
+                type: "post",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function(playlist) {
+                    $("#playlist").empty(); 
+                    playlist.forEach(item=>{
+                        $("#playlist").append("<li>" + item.artist + ": " + item.music + "</li>");
+                    });
+                }
+            });
+        });
+
+        $("#btn_update").click(function(event) {
+            $.getJSON("/getplaylist", function(playlist) {
+                playlist.forEach(item=>{
+                    $("#playlist").append("<li>" + item.artist + ": " + item.music + "</li>");
+                });
+            })
+        });
+    });
+    </script>
+    <title>Client Playlist</title>
+</head>
+<body>
+    <div>
+        <ul id="playlist"></ul>
+    </div>
+    <div>
+        Artist<input type="name"name="artist"id="artist"><br>
+        Music<input type="name"name="music"id="music"><br>
+        <button id="btn_submit">submit</button>
+        <button id="btn_update">update</button>
+    </div>
+</body>
+</html>

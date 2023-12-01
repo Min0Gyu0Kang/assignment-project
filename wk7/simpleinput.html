@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Select List Example</title>
+</head>
+<body>
+    <h1>Choose a Fruit:</h1>
+    <select id="fruitSelect">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="cherry">Cherry</option>
+        <option value="orange">Orange</option>
+        <option value="pear">Pear</option>
+    </select>
+
+    <p id="selectedFruit">You selected: <span id="result"></span></p>
+
+    <script>
+        // Get references to the select list and result paragraph
+        const fruitSelect = document.getElementById('fruitSelect');
+        const result = document.getElementById('result');
+
+        // Event listener for when the user selects a fruit
+        fruitSelect.addEventListener('change', function() {
+            const selectedValue = fruitSelect.value;
+            result.textContent = selectedValue;
+        });
+    </script>
+</body>
+</html>

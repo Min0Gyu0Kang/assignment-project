@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5
+.1/jquery.min.js"></script>
+<script src="function.js"> </script>
+</head>
+<body>
+    <p>Click me to disappear.</p>
+    <p id="p1">Enter this text.</p>
+Name: <input type="text" name="fullname"><br>
+Email: <input type="text" name="email"><br>
+<button>Toggle the paragraphs</button>
+<p>This is a paragraph with little content.</p>
+<p>This is another small paragraph.</p>
+<button>Animation</button>
+<div style = "background-color: blue; height:50px; width:50px; position: absolute; "></div>
+<script>
+$(document).ready(function(){
+$("p").click(function(){
+$("p").hide();
+});
+});
+// $(document).ready(function(){
+//     $("#p1").mouseenter(function(){
+//     alert("You entered p1!");
+//     });
+//     });
+$(document).ready(function(){
+$("input").focus(function(){
+$(this).css("background-color", "#cccccc");
+});
+$("input").blur(function(){
+$(this).css("background-color", "#ffffff");
+});
+});
+$(document).ready(function(){
+$("button").click(function(){
+$("p").toggle();
+});
+});
+$(document).ready(function() {
+$("button").click(function() {
+$("div").animate({
+left:'+=100px',
+height:'+=100px',
+width:'+=100px'
+});
+});
+});
+</script>
+</body>
+</html>

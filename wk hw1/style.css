@@ -1,0 +1,69 @@
+* {
+    padding: 0;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+.wrap {
+    padding: 40px 0;
+    background-color: #A8C0D6;
+    border: 3px solid #000;
+    border-radius: 5px;
+}
+
+
+
+.wrap .chat {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.wrap .chat .textbox {
+    position: relative;
+    display: inline-block;
+    max-width: calc(100% - 70px);
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 13px;
+    font-family: 'Times New Roman';
+    border-radius: 6px;
+}
+
+.wrap .ch1 .textbox {
+    margin-left: 20px;
+    background-color: #ffffff;
+    text-align: right; 
+}
+
+.wrap .ch1 .timestamp {
+    position: relative;
+    overflow: hidden;
+    font-size: 10px;
+    right: 10px; 
+    bottom:-17px;
+}
+
+.wrap .ch2 {
+    flex-direction: row-reverse;
+}
+
+.wrap .ch2 .timestamp {
+    position: relative;
+    overflow: hidden;
+    font-size: 10px;
+    right:-10px;
+    
+}
+.wrap .ch2 .textbox {
+    margin-right: 20px;
+    background-color: #F9EB54;
+    left: 10px; 
+    bottom: 17px;
+    text-align: right;
+}
+

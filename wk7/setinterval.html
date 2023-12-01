@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>setInterval Example</title>
+</head>
+<body>
+    <h1>Timer:</h1>
+    <p id="timer">0</p>
+
+    <script>
+        let seconds = 0; // Initial value for the timer
+
+        // Function to update the timer
+        function updateTimer() {
+            seconds++;
+            document.getElementById('timer').textContent = seconds;
+        }
+
+        // Set an interval to call the updateTimer function every second (1000 milliseconds)
+        const intervalId = setInterval(updateTimer, 1000);
+
+        // You can stop the interval by clearing it, for example, after a certain condition is met
+        // Uncomment the following line to stop the interval after 10 seconds
+        // if (seconds >= 10) clearInterval(intervalId);
+    </script>
+</body>
+</html>

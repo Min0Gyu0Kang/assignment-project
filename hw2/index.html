@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- <div class="gradient-background">
+      </div> -->
+    <div class="wrap">
+        <div class="chat">
+            <div class="chat1">
+                <div class="convo1">
+                    <!-- chat1 convo -->
+                </div>
+            </div>
+
+            <div class="chat2">
+                <div class="convo2">
+                    <!-- chat2 convo -->
+                </div>
+            </div>
+
+        </div>
+        <div class="input">
+            <div class="input1">
+                <!-- chat1 text area -->
+                <textarea class="textarea1" placeholder=""></textarea>
+                <button class="send1">Send</button>
+            </div>
+            
+            <div class="input2">
+                <!-- chat2 text area -->
+                <textarea class="textarea2" placeholder=""></textarea>
+                <button class="send2">Send</button>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+        // Get references to the Send buttons and text areas
+        const sendButton1 = document.querySelector('.send1');
+        const sendButton2 = document.querySelector('.send2');
+        const textarea1 = document.querySelector('.textarea1');
+        const textarea2 = document.querySelector('.textarea2');
+        const convo1 = document.querySelector('.convo1');
+        const convo2 = document.querySelector('.convo2');
+
+        // Initialize a variable to keep track of line breaks in textarea1 and textarea2
+        let lineBreakCount1 = 0;
+        let lineBreakCount2 = 0;
+
+        // Function to create a new message element with separate divs for timestamp and text
+        function createMessageElement(message, isRight) {
+            // Your existing function code here
+        }
+
+        // Event listener for Send button 1
+        sendButton1.addEventListener('click', () => {
+            // Your existing event listener code here
+        });
+
+        // Event listener for Send button 2
+        sendButton2.addEventListener('click', () => {
+            let userId = textarea2.value.trim();
+            if (userId) {
+                // Perform socket connection logic here
+
+                // Establish WebSocket connection
+                const socket = new WebSocket(`ws://your-api-base-url/ws/${userId}`);
+
+                // Event listener for when the connection is open
+                socket.onopen = (event) => {
+                    console.log("WebSocket connection opened:", event);
+                };
+
+                // Event listener for when a message is received from the server
+                socket.onmessage = (event) => {
+                    // Handle received messages, e.g., append them to the conversation div
+                    convo2.appendChild(createMessageElement(event.data, true));
+                };
+
+                // Event listener for when the connection is closed
+                socket.onclose = (event) => {
+                    console.log("WebSocket connection closed:", event);
+                };
+
+                // Event listener for errors
+                socket.onerror = (error) => {
+                    console.error("WebSocket error:", error);
+                };
+
+                lineBreakCount2 = 0;
+            }
+            // You may want to handle the case when no user ID is entered
+            // and provide appropriate feedback to the user.
+        });
+
+        // Event listener for Enter key press in textarea1
+        textarea1.addEventListener('keydown', (event) => {
+            // Your existing event listener code here
+        });
+
+        // Event listener for Enter key press in textarea2
+        textarea2.addEventListener('keydown', (event) => {
+            // Your existing event listener code here
+        });
+
+        function scrollToBottom(element) {
+            element.scrollTop = element.scrollHeight;
+        }
+    </script>
+    <script src="function.js"></script>
+</body>
+</html>

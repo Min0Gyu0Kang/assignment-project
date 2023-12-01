@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 760px;
+            margin: 0 auto;
+        }
+
+        #logo {
+            font-size: 20px;
+            color: #FFFFFF;
+            font-weight: bold;
+            background: #69097d;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            width: 100%;
+        }
+
+        #cat {
+            max-width: 100%;
+            height: auto;
+            font-size: 20px;
+            color: #000000;
+            font-weight: bold;
+            text-align: center;
+            background: #3ddc6f;
+            padding: 20px;
+            margin: 0;
+            display:flex;
+            flex:1;
+        }
+
+        #content {
+            font-size: 20px;
+            color: #000000;
+            font-weight: bold;
+            background: #3ddc6f;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            display:flex;
+            flex-direction: row;
+            flex: 2;
+        }
+
+        #link {
+            font-size: 20px;
+            background: #e67aa5;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        #footer {
+            font-size: 10px;
+            color: #000000;
+            font-weight: bold;
+            text-align: center;
+            background: #044f0c;
+            width: 760px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .item1 p,
+        .item2 p {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .item3 p {
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        #info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            padding: 10px;
+            background: #e67aa5;
+            z-index: 200;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo">
+        <h1>Exercise</h1>
+    </div>
+    <div class="container">
+        <div id="cat">
+            <img style="float:left" src="cat.png" alt="Cat Image">
+            <h3>반려묘에 대해</h3>
+            <p>반려묘가 머리를 앞다리 사이에 박거나 앞다리 위에 얼굴을 묻고 자는 경우를 종종 목격하실 때가 있으시죠?</p>
+        </div>
+        <div id="content">
+            <div class="item2">
+                <h3>div와 span</h3>
+                <p>div은 "divide"의 약자로서 페이지를 논리적인 섹션으로 분리하는데 사용되는 태그이다. span 요소는 인라인 요소로서 텍스트를 위한 컨테이너로 사용할 수 있다.</p>
+            </div>
+        </div>
+        <div id="link">
+            <div class="item3">
+                <h1>Links</h1>
+                <ul class="dot-list">
+                    <li><a href="https://www.w3.org/">W3C</a></li>
+                    <li><a href="https://getbootstrap.com/">Bootstrap</a></li>
+                    <li><a href="https://www.learn-coding.org/">생활코딩</a></li>
+                </ul>
+                <p>Student Number<br>2020315118</p>
+            </div>
+        </div>
+            
+    </div>
+    <div id="footer">
+        <p>Copyright Webprogramming</p>
+    </div>
+</body>
+</html>

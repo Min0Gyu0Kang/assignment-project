@@ -1,0 +1,21 @@
+header{
+    width:100%;
+    height: 100px;
+}
+nav{
+    float: left;
+    height: 500px;
+    width:30%;
+    background-color: pink;
+}
+section#main{
+    float: right;
+    height: 500px;
+    width:70%;
+    background-color: lightblue;
+}
+footer{
+    clear:both;
+    width:100%;
+    border:1px solid black
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>clearInterval Example</title>
+</head>
+<body>
+    <h1>Counter:</h1>
+    <p id="counter">0</p>
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+
+    <script>
+        let counter = 0; // Initial counter value
+        let intervalId; // Variable to store the interval ID
+
+        // Function to update the counter
+        function updateCounter() {
+            counter++;
+            document.getElementById('counter').textContent = counter;
+        }
+
+        document.getElementById('startButton').addEventListener('click', function() {
+            // Start the interval to call the updateCounter function every second (1000 milliseconds)
+            intervalId = setInterval(updateCounter, 1000);
+        });
+
+        document.getElementById('stopButton').addEventListener('click', function() {
+            // Stop the interval using clearInterval
+            clearInterval(intervalId);
+        });
+    </script>
+</body>
+</html>

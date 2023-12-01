@@ -1,0 +1,113 @@
+/* CSS for Chat Interface */
+* {
+    max-height: 500px;
+    max-width: 700px;
+}
+
+/* Wrap and position the chat containers */
+.wrap {
+    max-height: 500px;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat1 {
+    width: 300px;
+    height: 250px;
+    background-color: #A8C0D6;
+    float: left;
+    overflow:auto;
+}
+
+.chat2 {
+    width: 300px;
+    height: 250px;
+    background-color: #A8C0D6;
+    float: right;
+    overflow:auto;
+}
+
+.input1 {
+    width: 300px;
+    float: left;
+    background-color: #d8d8d8;
+}
+
+.textarea1 {
+    float: top; 
+    width: 70%;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: #d8d8d8;
+}
+
+.send1{
+    background-color: #F9EB54;
+    border-radius: 2px;
+    border-color: #F9EB54;
+    float:right;
+    z-index: 3;
+}
+
+.input2 {
+    width: 300px;
+    float: right;
+    background-color: #d8d8d8;
+}
+
+.textarea2 {
+    float: top;
+    width:70%;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: #d8d8d8;
+}
+
+.send2{
+    background-color: #F9EB54;
+    border-radius: 2px;
+    border-color: #F9EB54;
+    float:right;
+    z-index: 3;
+}
+/* conversation created*/
+.left,.right{
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 13px;
+    font-family: 'Times New Roman';
+    border-radius: 3px;
+}
+.right{
+    flex-direction: row-reverse;
+}
+.left .text{
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 2px;
+    border-color: #ffffff;
+}
+.left .timestamp{
+    margin-right: 20px;
+}
+.right .text{
+    margin-left: 20px;
+    background-color: #F9EB54;
+    border-radius: 2px;
+    border-color: #F9EB54;
+}
+.right .timestamp{
+    margin-left: 20px;
+}
+
+/*
+blue #A8C0D6;
+white #ffffff;
+yellow #F9EB54;
+*/
